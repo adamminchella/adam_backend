@@ -30,7 +30,7 @@ class Habit {
     let response = await db.query(
       `INSERT INTO habits (account_id, habit_name, frequency, streak) 
                                         VALUES ($1, $2, $3, $4) RETURNING habit_id;`,
-      [title, content]
+                                        [account_id, habit_name, frequency, streak]
     );
     const newId = response.rows[0].habit_id;
     const newHabit = await Habit.getOneById(newId);

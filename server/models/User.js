@@ -29,12 +29,23 @@ class User {
         const response = await db.query(`SELECT habits.*
                                              FROM habits INNER JOIN accounts 
                                                 ON accounts.account_id = habits.account_id 
-                                                WHERE habits.account_id = $1`, [account_id]);
+                                                WHERE accounts.account_id = $1`, [account_id]);
         if (response.rows.length < 1){
             throw new Error("No habits found for this account.")
         }
         return response.rows.map(p => new Habit(p));
 
+    }
+
+    static async dates (account_id){
+        const response = await db.query(`SELECT dates.*
+                                             FROM dates INNER JOIN accounts 
+                                                ON accounts.account_id = dates.account_id 
+                                                WHERE accounts.account_id = $1`, [account_id]);
+        if (response.rows.length < 1){
+            throw new Error("No dates found for this account.")
+        }
+        return response.rows.map(p => new Date(p));
     }
 
     static async create(data) {
