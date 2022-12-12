@@ -3,7 +3,6 @@ const authenticator = require("../middleware/authentication");
 
 const habitController = require("../controllers/habit.js");
 
-// const authenticator = require("../middleware/authenticator");
 
 const habitRouter = Router();
 

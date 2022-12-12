@@ -8,7 +8,8 @@ async function show(req, res) {
   try {
     const id = parseInt(req.params.id);
     const habit = await User.habits(id);
-    res.json(habit);
+    const dates = await User.dates(id);
+    res.json(habit, dates);
   } catch (err) {
     res.status(404).json({ error: err.message });
   }
