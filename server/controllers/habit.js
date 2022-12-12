@@ -2,7 +2,7 @@ const Habit = require("../models/habit");
 
 async function index(req, res) {
   try {
-    const habits = await Habit.getAllFromAccount();
+    const habits = await Habit.getAll();
     res.json(habits);
   } catch (err) {
     res.status(500).json({ error: err.message });

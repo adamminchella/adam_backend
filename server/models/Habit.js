@@ -22,14 +22,6 @@ class Habit {
         return new Habit(response.rows[0]);
     }
 
-    static async getAllFromAccount(account_id) {
-        const response = await db.query('SELECT * FROM habits WHERE account_id = $1', [account_id]);
-        if (response.rows.length < 1){
-            throw new Error("No habits found for this account.")
-        }
-        return response.rows.map(p => new Habit(p));
-    }
-
     static async create(data) {
         const { account_id, habit_name, frequency, streak } = data;
         let response = await db.query(`INSERT INTO habits (account_id, habit_name, frequency, streak) 

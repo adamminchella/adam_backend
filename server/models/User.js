@@ -25,6 +25,18 @@ class User {
         return new User(response.rows[0]);
     }
 
+    static async habits (account_id){
+        const response = await db.query(`SELECT habits.*
+                                             FROM habits INNER JOIN accounts 
+                                                ON accounts.account_id = habits.account_id 
+                                                WHERE habits.account_id = $1`, [account_id]);
+        if (response.rows.length < 1){
+            throw new Error("No habits found for this account.")
+        }
+        return response.rows.map(p => new Habit(p));
+
+    }
+
     static async create(data) {
         const { username, password } = data;
         let response = await db.query("INSERT INTO accounts (username, user_password) VALUES ($1, $2) RETURNING account_id;",

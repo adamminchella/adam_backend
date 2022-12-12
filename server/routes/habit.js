@@ -6,7 +6,7 @@ const authenticator = require("../middleware/authenticator");
 
 const habitRouter = Router();
 
-habitRouter.get("/", authenticator, habitController.index);
+habitRouter.get("/", habitController.index);
 habitRouter.habit("/", habitController.create);
 habitRouter.get("/:id", habitController.show);
 habitRouter.delete("/:id", habitController.destroy);
