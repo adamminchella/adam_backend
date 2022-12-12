@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS habits;
 DROP TABLE IF EXISTS user_sessions;
 DROP TABLE IF EXISTS accounts;
--- DROP TABLE IF EXISTS calendar;
+-- DROP TABLE IF EXISTS dates;
 
 CREATE TABLE accounts (
     account_id serial PRIMARY KEY,
@@ -27,7 +27,8 @@ CREATE TABLE user_sessions (
     FOREIGN KEY (account_id) REFERENCES accounts(account_id)
 );
 
--- CREATE TABLE calendar (
---     calendar_id serial PRIMARY KEY,
-
+-- CREATE TABLE dates (
+--     date_id serial PRIMARY KEY,
+--     date TIMESTAMP DEFAULT NOW(),
+--     habit_id INT,
 -- )

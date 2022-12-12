@@ -1,7 +1,8 @@
 const { Pool } = require("pg");
 
 const db = new Pool({
-  connectionString: process.env.DB_URL,
+  connectionString:
+    "postgres://oowixedk:wutbd0jayCj4e8KXRIKtv78nTRhybJus@tai.db.elephantsql.com/oowixedk",
 });
 
 console.log("DB connection established.");
