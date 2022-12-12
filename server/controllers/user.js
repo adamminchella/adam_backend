@@ -61,4 +61,15 @@ async function login(req, res) {
   }
 }
 
-module.exports = { show ,register, login };
+async function logout(req, res) {
+  try {
+    const session = await Session.getOneByAccountId(req.params.id);
+    const user = await User.getOneById(req.params.id);
+    const resp = await session.destroy();
+    res.status(200).json({ username: user.username });
+  } catch (err) {
+    res.status(404).json({ err });
+  }
+}
+
+module.exports = { show, register, login, logout };
