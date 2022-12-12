@@ -5,7 +5,7 @@ form.addEventListener("submit", async (e) => {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  const url = `http://localhost:3000/users/register`;
+  const url = `http://localhost:3000/users/login`;
 
   const options = {
     method: "POST",
@@ -18,8 +18,11 @@ form.addEventListener("submit", async (e) => {
 
   const response = await fetch(url, options);
 
-  if (response.status == 201) {
-    window.location.assign("login.html");
+  if (response.status == 200) {
+    const data = await response.json();
+    console.log(data);
+    localStorage.setItem("session", data.session);
+    window.location.assign(`index.html?account_id=${data.account_id}`);
   } else {
     alert("You've fucked it");
   }
