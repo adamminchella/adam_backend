@@ -17,6 +17,7 @@ async function show(req, res) {
 async function register(req, res) {
   try {
     const data = req.body;
+    console.log(data);
 
     // Generate a salt with a set time cost
     const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
