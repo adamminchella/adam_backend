@@ -21,6 +21,6 @@ form.addEventListener("submit", async (e) => {
   if (response.status == 201) {
     window.location.assign("login.html");
   } else {
-    alert("You've fucked it");
+    alert("You've messed it up");
   }
 });

@@ -24,6 +24,6 @@ form.addEventListener("submit", async (e) => {
     localStorage.setItem("session", data.session);
     window.location.assign(`index.html?account_id=${data.account_id}`);
   } else {
-    alert("You've fucked it");
+    alert("You've messed it");
   }
 });

@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-const authenticator = require("../middleware/authentication");
+const authenticator = require("./middleware/authentication");
 
 const habitRouter = require("./routes/habit");
 const userRouter = require("./routes/user");
