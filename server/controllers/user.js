@@ -2,6 +2,17 @@ const bcrypt = require("bcrypt");
 
 const User = require("../models/user");
 const Session = require("../models/session");
+// const Habit = require("../models/Habit");
+
+async function show(req, res) {
+  try {
+    const id = parseInt(req.params.id);
+    const habit = await User.habits(id);
+    res.json(habit);
+  } catch (err) {
+    res.status(404).json({ error: err.message });
+  }
+}
 
 async function register(req, res) {
   try {
@@ -50,4 +61,4 @@ async function login(req, res) {
   }
 }
 
-module.exports = { register, login };
+module.exports = { show ,register, login };
