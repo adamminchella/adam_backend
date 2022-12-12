@@ -7,7 +7,7 @@ const habitController = require("../controllers/habit.js");
 
 const habitRouter = Router();
 
-habitRouter.get("/", habitController.index);
+habitRouter.get("/", authenticator, habitController.index);
 habitRouter.post("/", authenticator, habitController.create);
 habitRouter.get("/:id", habitController.show);
 habitRouter.delete("/:id", authenticator, habitController.destroy);

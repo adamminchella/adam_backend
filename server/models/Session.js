@@ -13,7 +13,7 @@ class Session {
     const token = uuidv4().substring(0, 20);
 
     const response = await db.query(
-      "INSERT INTO user_session (account_id, session_token) VALUES ($1, $2) RETURNING *",
+      "INSERT INTO user_sessions (account_id, session_token) VALUES ($1, $2) RETURNING *",
       [account_id, token]
     );
     return new Session(response.rows[0]);
@@ -21,7 +21,7 @@ class Session {
 
   static async getOneById(id) {
     const response = await db.query(
-      "SELECT * FROM user_session WHERE session_id = $1",
+      "SELECT * FROM user_sessions WHERE session_id = $1",
       [id]
     );
     if (response.rows.length != 1) {
@@ -32,9 +32,10 @@ class Session {
 
   static async getOneByAccountId(id) {
     const response = await db.query(
-      "SELECT * FROM user_session WHERE account_id = $1",
+      "SELECT * FROM user_sessions WHERE account_id = $1",
       [id]
     );
+    console.log(response.rows);
     if (response.rows.length != 1) {
       throw new Error("Unable to locate session");
     }
@@ -43,7 +44,7 @@ class Session {
 
   static async getOneBySessionToken(token) {
     const response = await db.query(
-      "SELECT * FROM user_session WHERE session_token = $1",
+      "SELECT * FROM user_sessions WHERE session_token = $1",
       [token]
     );
     if (response.rows.length != 1) {

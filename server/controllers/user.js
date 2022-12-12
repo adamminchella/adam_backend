@@ -49,9 +49,11 @@ async function login(req, res) {
 
       // Generate a session for user when they log in
       const newSession = await Session.create(user.id);
-      res
-        .status(200)
-        .json({ authenticated: true, session: newSession.session_token });
+      res.status(200).json({
+        authenticated: true,
+        session: newSession.session_token,
+        account_id: user.id,
+      });
     } else {
       // If password is incorrect
       throw new Error("Incorrect credentials");
@@ -69,6 +71,7 @@ async function logout(req, res) {
     const resp = await session.destroy();
     res.status(200).json({ username: user.username });
   } catch (err) {
+    console.log(err);
     res.status(404).json({ err });
   }
 }
