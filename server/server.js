@@ -3,7 +3,6 @@ const cors = require("cors");
 
 const habitRouter = require("./routes/habit");
 const userRouter = require("./routes/user");
-const sessionRouter = require("./routes/session");
 
 const server = express();
 
@@ -16,6 +15,5 @@ server.get("/", (req, res) => {
 
 server.use("/habits", habitRouter);
 server.use("/users", userRouter);
-server.use("/sessions", sessionRouter);
 
 module.exports = server;

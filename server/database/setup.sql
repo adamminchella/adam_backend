@@ -12,7 +12,7 @@ CREATE TABLE accounts (
 CREATE TABLE habits (
     habit_id serial PRIMARY KEY,
     account_id Int NOT NULL,
-    habit_name varchar(30) NOT NULL,
+    habit_name varchar(255) NOT NULL,
     frequency INT NOT NULL,
     streak INT NOT NULL,
     FOREIGN KEY (account_id) REFERENCES accounts(account_id)
