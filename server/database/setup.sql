@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS habits;
 DROP TABLE IF EXISTS user_sessions;
-DROP TABLE IF EXISTS accounts;
 DROP TABLE IF EXISTS dates;
+DROP TABLE IF EXISTS accounts;
 
 CREATE TABLE accounts (
     account_id serial PRIMARY KEY,
@@ -36,3 +36,5 @@ CREATE TABLE dates (
     date TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (account_id) REFERENCES accounts(account_id)
 );
+
+-- INSERT INTO accounts (username, user_password, dark_mode, avatar)
