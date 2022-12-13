@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 
-const User = require("../models/user");
-const Session = require("../models/session");
+const User = require("../models/User");
+const Session = require("../models/Session");
 // const Habit = require("../models/Habit");
 
 async function show(req, res) {
