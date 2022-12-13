@@ -30,11 +30,26 @@ class Habit {
     let response = await db.query(
       `INSERT INTO habits (account_id, habit_name, frequency, streak) 
                                         VALUES ($1, $2, $3, $4) RETURNING habit_id;`,
-                                        [account_id, habit_name, frequency, streak]
+      [account_id, habit_name, frequency, streak]
     );
     const newId = response.rows[0].habit_id;
     const newHabit = await Habit.getOneById(newId);
     return newHabit;
+  }
+
+  static async update(data) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { account_id, habit_name, frequency, streak } = data;
+        let result = await db.query(
+          `UPDATE habits SET habit_name = $1, frequency = $2, streak = $3 WHERE account_id = $4 RETURNING *;`,
+          [habit_name, frequency, streak, account_id]
+        );
+        resolve(result.rows[0]);
+      } catch (err) {
+        reject("Habit could not be updated");
+      }
+    });
   }
 
   async destroy() {
