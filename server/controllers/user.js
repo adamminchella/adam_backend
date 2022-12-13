@@ -77,4 +77,14 @@ async function logout(req, res) {
   }
 }
 
-module.exports = { show, register, login, logout };
+async function destroy(req, res) {
+  try {
+    const user = await User.getOneById(req.params.id);
+    const resp = await user.destroy();
+    res.status(204).json(resp);
+  } catch (err) {
+    res.status(404).json({ err });
+  }
+}
+
+module.exports = { show, register, login, logout, destroy };

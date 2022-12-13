@@ -9,5 +9,6 @@ userRouter.post("/register", userController.register);
 userRouter.post("/login", userController.login);
 userRouter.get("/:id", authenticator, userController.show);
 userRouter.get("/logout/:id", userController.logout);
+userRouter.delete("/:id", userController.destroy);
 
 module.exports = userRouter;
