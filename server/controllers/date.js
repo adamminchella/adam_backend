@@ -1,4 +1,4 @@
-const Date = require("../models/date");
+const Date = require("../models/Date");
 
 async function index(req, res) {
   try {
