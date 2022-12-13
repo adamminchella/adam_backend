@@ -36,3 +36,5 @@ CREATE TABLE dates (
     date TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (account_id) REFERENCES accounts(account_id)
 );
+
+-- INSERT INTO accounts (username, user_password, dark_mode, avatar)
