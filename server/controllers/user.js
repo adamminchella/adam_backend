@@ -85,6 +85,25 @@ async function destroy(req, res) {
   } catch (err) {
     res.status(404).json({ err });
   }
-}
+};
 
-module.exports = { show, register, login, logout, destroy };
+async function update(req, res) {
+  try {
+    const newUser = req.body;
+    const id = req.params.id;
+    const user = await User.getOneById(id);
+    if (user.user_password != newUser.user_password){
+      const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
+
+    //   Hash the password
+      newUser["password"] = await bcrypt.hash(newUser["password"], salt);
+    }
+    const changedUser = await User.update(newUser);
+    res.status(200).json(changedUser);
+
+  } catch (err) {
+    res.status(417).send({err});
+  };
+  };
+
+module.exports = { show, register, login, logout, destroy, update };
