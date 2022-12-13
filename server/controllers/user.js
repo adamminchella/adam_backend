@@ -9,7 +9,8 @@ async function show(req, res) {
     const id = parseInt(req.params.id);
     const habit = await User.habits(id);
     const dates = await User.dates(id);
-    res.json(habit, dates);
+    const user = await User.getOneById(id);
+    res.json(habit, dates, user);
   } catch (err) {
     res.status(404).json({ error: err.message });
   }
