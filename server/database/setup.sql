@@ -6,7 +6,9 @@ DROP TABLE IF EXISTS dates;
 CREATE TABLE accounts (
     account_id serial PRIMARY KEY,
     username varchar(20) UNIQUE NOT NULL,
-    user_password CHAR(60) NOT NULL
+    user_password CHAR(60) NOT NULL,
+    dark_mode VARCHAR(7),
+    avatar BYTEA
 );
 
 CREATE TABLE habits (
@@ -33,4 +35,4 @@ CREATE TABLE dates (
     habits VARCHAR(255),
     date TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (account_id) REFERENCES accounts(account_id)
-)
+);

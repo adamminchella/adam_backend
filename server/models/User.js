@@ -1,10 +1,12 @@
 const db = require("../database/connect");
 
 class User {
-  constructor({ account_id, username, user_password }) {
+  constructor({ account_id, username, user_password, dark_mode, avatar }) {
     this.id = account_id;
     this.username = username;
     this.password = user_password;
+    this.dark_mode = dark_mode;
+    this.avatar = avatar;
   }
 
   static async getOneById(id) {
@@ -58,10 +60,10 @@ class User {
   }
 
   static async create(data) {
-    const { username, password } = data;
+    const { username, password, dark_mode, avatar } = data;
     let response = await db.query(
-      "INSERT INTO accounts (username, user_password) VALUES ($1, $2) RETURNING account_id;",
-      [username, password]
+      "INSERT INTO accounts (username, user_password) VALUES ($1, $2, $3, $4) RETURNING account_id;",
+      [username, password, dark_mode, avatar]
     );
     const newId = response.rows[0].account_id;
     const newAccount = await User.getOneById(newId);
@@ -87,6 +89,24 @@ class User {
     );
     return new User(accountResponse.rows[0]);
   }
-}
+
+  static async update(newUser) {
+    return new Promise (async (resolve, reject) => {
+      try{
+        console.log(newUser);
+        const {id, username, user_password, dark_mode, avatar } = newUser;
+        let result = await db.query(`UPDATE accounts SET 
+                                        username = $1, user_password = $2, dark_mode = $3, avatar = $4 
+                                        WHERE id = $5 RETURNING id;`, 
+                                        [username, user_password, dark_mode, avatar, id]);
+        console.log(result);
+        resolve(result.rows[0]);
+      }
+      catch(err){
+        reject("User could not be updated")
+      }
+    })
+  }
+};
 
 module.exports = User;
