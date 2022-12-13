@@ -1,14 +1,13 @@
 const { Router } = require("express");
-const authenticator = require("../middleware/authentication");
 
 const habitController = require("../controllers/habit.js");
 
-
 const habitRouter = Router();
 
-habitRouter.get("/", authenticator, habitController.index);
-habitRouter.post("/", authenticator, habitController.create);
+habitRouter.get("/", habitController.index);
+habitRouter.post("/", habitController.create);
 habitRouter.get("/:id", habitController.show);
-habitRouter.delete("/:id", authenticator, habitController.destroy);
+habitRouter.put("/:id", habitController.update);
+habitRouter.delete("/:id", habitController.destroy);
 
 module.exports = habitRouter;

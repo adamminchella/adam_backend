@@ -29,6 +29,15 @@ async function show(req, res) {
   }
 }
 
+async function update(req, res) {
+  try {
+    const habit = await Habit.update(req.body);
+    res.status(200).json(habit);
+  } catch (err) {
+    res.status(417).json({ err });
+  }
+}
+
 async function destroy(req, res) {
   try {
     const id = parseInt(req.params.id);
@@ -44,5 +53,6 @@ module.exports = {
   index,
   create,
   show,
+  update,
   destroy,
 };
