@@ -6,3 +6,5 @@ const api = require("./server");
 api.listen(port, () => {
   console.log(`API listening on http://localhost:${port}`);
 });
+
+module.exports = api;

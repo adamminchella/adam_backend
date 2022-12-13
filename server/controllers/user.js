@@ -10,7 +10,7 @@ async function show(req, res) {
     const habit = await User.habits(id);
     const dates = await User.dates(id);
     const user = await User.getOneById(id);
-    res.json(habit, dates, user);
+     res.status(200).json({ habit, dates, user });
   } catch (err) {
     res.status(404).json({ error: err.message });
   }
@@ -86,25 +86,26 @@ async function destroy(req, res) {
   } catch (err) {
     res.status(404).json({ err });
   }
-};
+}
 
 async function update(req, res) {
   try {
     const newUser = req.body;
     const id = req.params.id;
     const user = await User.getOneById(id);
-    if (user.user_password != newUser.user_password){
-      const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
+    if (user.user_password != newUser.user_password) {
+      const salt = await bcrypt.genSalt(
+        parseInt(process.env.BCRYPT_SALT_ROUNDS)
+      );
 
-    //   Hash the password
+      //   Hash the password
       newUser["password"] = await bcrypt.hash(newUser["password"], salt);
     }
     const changedUser = await User.update(newUser);
     res.status(200).json(changedUser);
-
   } catch (err) {
-    res.status(417).send({err});
-  };
-  };
+    res.status(417).send({ err });
+  }
+}
 
 module.exports = { show, register, login, logout, destroy, update };
