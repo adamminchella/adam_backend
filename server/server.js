@@ -16,7 +16,7 @@ server.get("/", (req, res) => {
   res.status(200).json({ message: "Welcome to our server" });
 });
 
-server.use("/habits", habitRouter);
+server.use("/habits", authenticator, habitRouter);
 server.use("/users", userRouter);
 server.use("/dates", authenticator, dateRouter);
 
