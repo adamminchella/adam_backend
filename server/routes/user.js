@@ -7,8 +7,10 @@ const userRouter = Router();
 
 userRouter.post("/register", userController.register);
 userRouter.post("/login", userController.login);
-userRouter.get("/:id", authenticator, userController.show);
+userRouter.get("/habits/:id", authenticator, userController.habitsShow);
+userRouter.get("/dates/:id", authenticator, userController.datesShow);
 userRouter.get("/logout/:id", authenticator, userController.logout);
+userRouter.get("/:id", authenticator, userController.show);
 userRouter.delete("/:id", authenticator, userController.destroy);
 userRouter.put("/:id", authenticator, userController.update);
 

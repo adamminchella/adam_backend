@@ -41,9 +41,9 @@ class User {
                                                 WHERE accounts.account_id = $1`,
       [account_id]
     );
-    if (response.rows.length < 1) {
-      throw new Error("No habits found for this account.");
-    }
+    // if (response.rows.length < 1) {
+    //   throw new Error("No habits found for this account.");
+    // }
     return response.rows.map((p) => new Habit(p));
   }
 
@@ -55,9 +55,9 @@ class User {
                                                 WHERE accounts.account_id = $1`,
       [account_id]
     );
-    if (response.rows.length < 1) {
-      throw new Error("No dates found for this account.");
-    }
+    // if (response.rows.length < 1) {
+    //   throw new Error("No dates found for this account.");
+    // }
     return response.rows.map((p) => new Date(p));
   }
 
@@ -95,15 +95,18 @@ class User {
   static async update(newUser) {
     return new Promise(async (resolve, reject) => {
       try {
-        console.log(newUser);
-        const { id, username, user_password, dark_mode, avatar } = newUser;
+        const { id, username, password, dark_mode, avatar } = newUser;
+        console.log(id);
+        console.log(username);
+        console.log(password);
+        console.log(dark_mode);
+        console.log(avatar.length);
         let result = await db.query(
           `UPDATE accounts SET 
-                                        username = $1, user_password = $2, dark_mode = $3, avatar = $4 
-                                        WHERE id = $5 RETURNING id;`,
-          [username, user_password, dark_mode, avatar, id]
+                              username = $1, user_password = $2, dark_mode = $3, avatar = $4 
+                              WHERE account_id = $5 RETURNING *;`,
+          [username, password, dark_mode, avatar, id]
         );
-        console.log(result);
         resolve(result.rows[0]);
       } catch (err) {
         reject("User could not be updated");

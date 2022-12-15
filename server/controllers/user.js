@@ -7,10 +7,29 @@ const Session = require("../models/Session");
 async function show(req, res) {
   try {
     const id = parseInt(req.params.id);
-    const habit = await User.habits(id);
-    const dates = await User.dates(id);
     const user = await User.getOneById(id);
-     res.status(200).json({ habit, dates, user });
+    // console.log(user);
+     res.status(200).json(user);
+  } catch (err) {
+    res.status(404).json({ error: err.message });
+  }
+}
+
+async function habitsShow(req, res) {
+  try {
+    const id = parseInt(req.params.id);
+    const habit = await User.habits(id);
+     res.status(200).json(habit);
+  } catch (err) {
+    res.status(404).json({ error: err.message });
+  }
+}
+
+async function datesShow(req, res) {
+  try {
+    const id = parseInt(req.params.id);
+    const dates = await User.dates(id);
+     res.status(200).json(dates);
   } catch (err) {
     res.status(404).json({ error: err.message });
   }
@@ -19,14 +38,14 @@ async function show(req, res) {
 async function register(req, res) {
   try {
     const data = req.body;
-    console.log(data);
 
     // Generate a salt with a set time cost
     const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
 
     //   Hash the password
     data["password"] = await bcrypt.hash(data["password"], salt);
-
+    // data = {...data, dark_mode: "Default", avatar: ""};
+    console.log(data);
     //   Send the username and password off to make a new user
     const result = await User.create(data);
 
@@ -91,21 +110,24 @@ async function destroy(req, res) {
 async function update(req, res) {
   try {
     const newUser = req.body;
+    // console.log("newUser",newUser)
     const id = req.params.id;
     const user = await User.getOneById(id);
-    if (user.user_password != newUser.user_password) {
+    // console.log("User",user)
+    if (user.password != newUser.password) {
       const salt = await bcrypt.genSalt(
         parseInt(process.env.BCRYPT_SALT_ROUNDS)
       );
-
       //   Hash the password
       newUser["password"] = await bcrypt.hash(newUser["password"], salt);
     }
+    // console.log(newUser);
     const changedUser = await User.update(newUser);
+    // console.log("changedUser",changedUser)
     res.status(200).json(changedUser);
   } catch (err) {
     res.status(417).send({ err });
   }
 }
 
-module.exports = { show, register, login, logout, destroy, update };
+module.exports = { show, register, login, logout, destroy, update, habitsShow,datesShow  };
